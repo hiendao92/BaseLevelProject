@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Base Level Project</string>
+    <string name="activity_animation_duration">250</string>
+    <string name="navigation_tab_1">Tab1</string>
+    <string name="navigation_tab_2">Tab2</string>
+    <string name="navigation_tab_3">Tab3</string>
+    <string name="navigation_tab_4">Tab4</string>
+
+</resources>

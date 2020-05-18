@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/btnFooterFind"
+        android:enabled="true"
+        android:orderInCategory="0"
+        android:icon="@drawable/ic_home"
+        android:title="@string/navigation_tab_1"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/btnFooterMsg"
+        android:enabled="true"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_play"
+        android:title="@string/navigation_tab_2"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/btnFooterPay"
+        android:enabled="true"
+        android:orderInCategory="2"
+        android:icon="@drawable/ic_photo"
+        android:title="@string/navigation_tab_3"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/btnFooterMore"
+        android:enabled="true"
+        android:orderInCategory="3"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/navigation_tab_4"
+        app:showAsAction="ifRoom" />
+</menu>
