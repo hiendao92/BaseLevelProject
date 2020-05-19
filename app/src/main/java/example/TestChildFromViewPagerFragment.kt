@@ -6,14 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import base.BaseFragment
 import com.example.myapplication.R
-import kotlinx.android.synthetic.main.fragment_test.btnAddFragment
-import kotlinx.android.synthetic.main.fragment_test.btnAddFragmentWithViewPager
-import kotlinx.android.synthetic.main.fragment_test.btnAddSuperFragment
-import kotlinx.android.synthetic.main.fragment_test.btnReplaceFragment
-import kotlinx.android.synthetic.main.fragment_test.btnReplaceFragmentWithViewPager
-import kotlinx.android.synthetic.main.fragment_test_tab.*
+import kotlinx.android.synthetic.main.fragment_test_child_vp.*
 
-class Tab4Fragment : BaseFragment() {
+class TestChildFromViewPagerFragment : BaseFragment() {
     override fun onBindViewModel() {
 
     }
@@ -23,36 +18,32 @@ class Tab4Fragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_test_tab, container, false)
+        return inflater.inflate(R.layout.fragment_test_child_vp, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
+        tvLevel.text = "Level : ${getLevel()}"
         initListeners()
-    }
-
-    private fun initViews() {
-        tvTop.text = "Page 4"
     }
 
     private fun initListeners() {
         btnAddFragment.setOnClickListener {
-            addFragment(TestFragment.newInstance("Add Fragment 4", page = 4))
+            addFragment(TestFragment.newInstance("Add Fragment", page = 1))
         }
         btnReplaceFragment.setOnClickListener {
             replaceFragment(
-                TestFragment.newInstance("Replace Fragment 4", page = 4),
+                TestFragment.newInstance("Replace Fragment", page = 1),
                 isEnableAnim = true,
                 isAddBackStack = true
             )
         }
         btnAddFragmentWithViewPager.setOnClickListener {
-            addFragment(TestFragment.newInstance("Add Fragment", true))
+            addFragment(TestViewPagerFragment())
         }
         btnReplaceFragmentWithViewPager.setOnClickListener {
             replaceFragment(
-                TestFragment.newInstance("Replace Fragment", true),
+                TestViewPagerFragment(),
                 isEnableAnim = true,
                 isAddBackStack = true
             )
@@ -61,4 +52,5 @@ class Tab4Fragment : BaseFragment() {
             addSuperFragment(TestFragment.newInstance("Add Super Fragment"))
         }
     }
+
 }

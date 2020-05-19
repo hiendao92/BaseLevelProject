@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import base.BaseFragment
 import com.example.myapplication.R
-import kotlinx.android.synthetic.main.fragment_tab1.*
+import kotlinx.android.synthetic.main.fragment_test_tab.*
 
 class Tab1Fragment : BaseFragment() {
     override fun onBindViewModel() {
@@ -18,7 +18,7 @@ class Tab1Fragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_tab1, container, false)
+        return inflater.inflate(R.layout.fragment_test_tab, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +28,7 @@ class Tab1Fragment : BaseFragment() {
     }
 
     private fun initViews() {
-
+        tvTop.text = "Page 1"
     }
 
     private fun initListeners() {
@@ -43,11 +43,11 @@ class Tab1Fragment : BaseFragment() {
             )
         }
         btnAddFragmentWithViewPager.setOnClickListener {
-            addFragment(TestFragment.newInstance("Add Fragment", true))
+            addFragment(TestViewPagerFragment())
         }
         btnReplaceFragmentWithViewPager.setOnClickListener {
             replaceFragment(
-                TestFragment.newInstance("Replace Fragment", true),
+                TestViewPagerFragment(),
                 isEnableAnim = true,
                 isAddBackStack = true
             )

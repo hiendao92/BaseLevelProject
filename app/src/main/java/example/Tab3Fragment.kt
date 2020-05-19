@@ -6,7 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import base.BaseFragment
 import com.example.myapplication.R
-import kotlinx.android.synthetic.main.fragment_tab3.*
+import kotlinx.android.synthetic.main.fragment_test.btnAddFragment
+import kotlinx.android.synthetic.main.fragment_test.btnAddFragmentWithViewPager
+import kotlinx.android.synthetic.main.fragment_test.btnAddSuperFragment
+import kotlinx.android.synthetic.main.fragment_test.btnReplaceFragment
+import kotlinx.android.synthetic.main.fragment_test.btnReplaceFragmentWithViewPager
+import kotlinx.android.synthetic.main.fragment_test_tab.*
 
 class Tab3Fragment : BaseFragment() {
     override fun onBindViewModel() {
@@ -18,7 +23,7 @@ class Tab3Fragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_tab3, container, false)
+        return inflater.inflate(R.layout.fragment_test_tab, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +33,7 @@ class Tab3Fragment : BaseFragment() {
     }
 
     private fun initViews() {
-
+        tvTop.text = "Page 3"
     }
 
     private fun initListeners() {

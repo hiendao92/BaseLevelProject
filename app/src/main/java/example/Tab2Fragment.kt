@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import base.BaseFragment
 import com.example.myapplication.R
-import kotlinx.android.synthetic.main.fragment_tab2.*
+import kotlinx.android.synthetic.main.fragment_test_tab.*
 
 class Tab2Fragment : BaseFragment() {
     override fun onBindViewModel() {
@@ -18,7 +18,7 @@ class Tab2Fragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_tab2, container, false)
+        return inflater.inflate(R.layout.fragment_test_tab, container, false)
     }
 
 
@@ -29,7 +29,7 @@ class Tab2Fragment : BaseFragment() {
     }
 
     private fun initViews() {
-
+        tvTop.text = "Page 2"
     }
 
     private fun initListeners() {
