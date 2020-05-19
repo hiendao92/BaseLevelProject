@@ -1,4 +1,4 @@
-package test
+package example
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import base.BaseFragment
 import com.example.myapplication.R
-import kotlinx.android.synthetic.main.fragment_tab1.*
+import kotlinx.android.synthetic.main.fragment_tab2.*
 
-class Tab1Fragment : BaseFragment() {
+class Tab2Fragment : BaseFragment() {
     override fun onBindViewModel() {
 
     }
@@ -18,8 +18,9 @@ class Tab1Fragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_tab1, container, false)
+        return inflater.inflate(R.layout.fragment_tab2, container, false)
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,11 +34,11 @@ class Tab1Fragment : BaseFragment() {
 
     private fun initListeners() {
         btnAddFragment.setOnClickListener {
-            addFragment(TestFragment.newInstance("Add Fragment", page = 1))
+            addFragment(TestFragment.newInstance("Add Fragment 2", page = 2))
         }
         btnReplaceFragment.setOnClickListener {
             replaceFragment(
-                TestFragment.newInstance("Replace Fragment", page = 1),
+                TestFragment.newInstance("Replace Fragment 2", page = 2),
                 isEnableAnim = true,
                 isAddBackStack = true
             )

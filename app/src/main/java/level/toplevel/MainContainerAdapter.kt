@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import base.BaseAdapterPager
 import data.AppConstant
-import test.Tab1Fragment
-import test.Tab2Fragment
-import test.Tab3Fragment
-import test.Tab4Fragment
+import example.Tab1Fragment
+import example.Tab2Fragment
+import example.Tab3Fragment
+import example.Tab4Fragment
 
 class MainContainerAdapter(fm: FragmentManager, private val level: Int) :
     BaseAdapterPager(fm, level) {
