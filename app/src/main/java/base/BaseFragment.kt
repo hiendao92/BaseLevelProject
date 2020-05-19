@@ -12,7 +12,7 @@ abstract class BaseFragment : Fragment() {
 
     internal fun getLevel() = level
 
-    internal fun isContainer() = arguments?.getBoolean(AppConstant.KEY_IS_CONTAINER) ?: false
+    private fun isContainer() = arguments?.getBoolean(AppConstant.KEY_IS_CONTAINER) ?: false
 
     internal fun setLevel(level: Int) {
         this.level = level
@@ -33,7 +33,8 @@ abstract class BaseFragment : Fragment() {
         val range = getLevel() - AppConstant.LEVEL_CONTAINER
         val fm: FragmentManager? =
             when (getLevel()) {
-                AppConstant.LEVEL_TOP -> fragmentManager
+                // do not use fragment manager of activity
+                AppConstant.LEVEL_TOP -> return
                 AppConstant.LEVEL_CONTAINER -> {
                     if (isContainer())
                         childFragmentManager
@@ -46,6 +47,7 @@ abstract class BaseFragment : Fragment() {
                         parentFm = parentFragment?.fragmentManager
                     }
                     parentFm
+                    // or use activity
                 }
             }
         fm?.beginTransaction()?.apply {
@@ -71,7 +73,8 @@ abstract class BaseFragment : Fragment() {
         val range = getLevel() - AppConstant.LEVEL_CONTAINER
         val fm: FragmentManager? =
             when (getLevel()) {
-                AppConstant.LEVEL_TOP -> fragmentManager
+                // do not use fragment manager of activity
+                AppConstant.LEVEL_TOP -> return
                 AppConstant.LEVEL_CONTAINER -> {
                     if (isContainer())
                         childFragmentManager
