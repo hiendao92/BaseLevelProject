@@ -41,7 +41,7 @@ abstract class BaseMainActivity : AppCompatActivity() {
                 // pop super flow
                 it.popBackStack()
             } else {
-                // pop main flow
+                // pop example.main flow
                 mainContainer.popBackStack()
             }
         }

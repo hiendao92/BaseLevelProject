@@ -1,4 +1,4 @@
-package main
+package example.main
 
 import base.BaseMainActivity
 import base.level.maintoplevel.BaseMainContainer
