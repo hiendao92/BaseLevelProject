@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.myapplication.R
 import data.AppConstant
-import main.MainActivity
 
 abstract class BaseFragment : Fragment() {
 
@@ -106,7 +105,7 @@ abstract class BaseFragment : Fragment() {
         fragment: Fragment,
         isEnableAnim: Boolean = true, tagNameBackStack: String? = null
     ) {
-        (activity as? MainActivity)?.addSuperFragment(
+        (activity as? BaseMainActivity)?.addSuperFragment(
             fragment,
             isEnableAnim,
             tagNameBackStack

@@ -1,17 +1,17 @@
-package level.toplevel
+package example.level.maintoplevel
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import base.BaseFragment
+import base.level.maintoplevel.BaseMainContainer
 import com.example.myapplication.R
 import kotlinx.android.synthetic.main.fragment_container.*
 
-class MainContainerFragment : BaseFragment() {
+class MainExampleContainerFragment : BaseMainContainer() {
 
-    private val adapter: MainContainerAdapter by lazy {
-        MainContainerAdapter(childFragmentManager, getLevel())
+    private val adapter: MainExampleContainerAdapter by lazy {
+        MainExampleContainerAdapter(childFragmentManager, getLevel())
     }
 
     override fun onCreateView(
@@ -33,7 +33,7 @@ class MainContainerFragment : BaseFragment() {
 
     private fun initViews() {
         vpContainer.apply {
-            adapter = this@MainContainerFragment.adapter
+            adapter = this@MainExampleContainerFragment.adapter
         }
         bottomNavigation.apply {
             setOnNavigationItemSelectedListener {
@@ -47,9 +47,10 @@ class MainContainerFragment : BaseFragment() {
 
     }
 
-    internal fun popBackStack() {
+    override fun popBackStack() {
         vpContainer?.currentItem?.also {
             adapter.getRegisteredFragment(it)?.childFragmentManager?.popBackStack()
         }
     }
+
 }

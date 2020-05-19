@@ -1,13 +1,14 @@
-package level.superlevel
+package example.level.superlevel
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import base.BaseFragment
+import base.level.superlevel.BaseSuperContainer
 import com.example.myapplication.R
 
-class SuperContainerFragment : BaseFragment() {
+class SuperExampleContainerFragment : BaseSuperContainer() {
     override fun onBindViewModel() {
 
     }
