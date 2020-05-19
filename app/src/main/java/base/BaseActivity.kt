@@ -8,7 +8,9 @@ import com.example.myapplication.R
 @SuppressLint("Registered")
 abstract class BaseActivity : AppCompatActivity() {
 
-
+    /**
+     * handle fragment
+     */
     internal fun addFragment(
         fragment: Fragment,
         isEnableAnim: Boolean = true,
