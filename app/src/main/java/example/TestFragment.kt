@@ -68,11 +68,11 @@ class TestFragment : BaseFragment() {
             )
         }
         btnAddFragmentWithViewPager.setOnClickListener {
-            addFragment(newInstance("Add Fragment", true))
+            addFragment(TestViewPagerFragment())
         }
         btnReplaceFragmentWithViewPager.setOnClickListener {
             replaceFragment(
-                newInstance("Replace Fragment", true),
+                TestViewPagerFragment(),
                 isEnableAnim = true,
                 isAddBackStack = true
             )
