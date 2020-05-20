@@ -16,6 +16,8 @@ abstract class BaseMainActivity : AppCompatActivity() {
 
     abstract fun superContainer(): BaseSuperContainer
 
+    private var backPressCallbacks: MutableList<() -> Unit> = mutableListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBase()
@@ -36,6 +38,7 @@ abstract class BaseMainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        super.onBackPressed()
         superContainer.childFragmentManager.also {
             if (it.fragments.size > 0) {
                 // pop super flow

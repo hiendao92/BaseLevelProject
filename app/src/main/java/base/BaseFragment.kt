@@ -1,5 +1,9 @@
 package base
 
+import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.myapplication.R
@@ -15,6 +19,36 @@ abstract class BaseFragment : Fragment() {
 
     internal fun setLevel(level: Int) {
         this.level = level
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val callback = object : OnBackPressedCallback(
+            true
+            /** true means that the callback is enabled */
+        ) {
+            override fun handleOnBackPressed() {
+                handleOnBackPressed()
+            }
+        }
+
+        // note that you could enable/disable the callback here as well by setting callback.isEnabled = true/false
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+    }
+
+    protected open fun handleBackPress() {
+        when (getLevel()) {
+            AppConstant.LEVEL_TOP -> {
+
+            }
+            AppConstant.LEVEL_CONTAINER -> {
+
+            }
+            else -> {
+
+            }
+        }
     }
 
     override fun onResume() {

@@ -34,6 +34,7 @@ class MainExampleContainerFragment : BaseMainContainer() {
     private fun initViews() {
         vpContainer.apply {
             adapter = this@MainExampleContainerFragment.adapter
+            offscreenPageLimit = 4
         }
         bottomNavigation.apply {
             setOnNavigationItemSelectedListener {
