@@ -26,7 +26,8 @@ abstract class BaseFragment : Fragment() {
 
     internal fun replaceFragment(
         fragment: Fragment, isAddBackStack: Boolean,
-        isEnableAnim: Boolean = true, tagNameBackStack: String? = null
+        isEnableAnim: Boolean = true, tagNameBackStack: String? = null,
+        replaceInChild: Boolean = false
     ) {
         (fragment as? BaseFragment)?.setLevel(AppConstant.LEVEL_CONTAINER)
         val range = getLevel() - AppConstant.LEVEL_CONTAINER
@@ -41,17 +42,26 @@ abstract class BaseFragment : Fragment() {
                         fragmentManager
                 }
                 else -> {
-                    var parentFm: Fragment? = this
-                    for (index in 1..range) {
-                        parentFm = parentFm?.parentFragment
+                    if (replaceInChild) {
+                        // get child fragment manager of container
+                        var parentFm: BaseFragment? = this
+                        while (parentFm?.isContainer() == false) {
+                            parentFm = parentFm.parentFragment as? BaseFragment
+                        }
+                        parentFm?.childFragmentManager
+                    } else {
+                        // get fragment manager of fragment when level = 1(Main top container)
+                        var parentFm: Fragment? = this
+                        for (index in 1..range) {
+                            parentFm = parentFragment
+                        }
+                        parentFm?.fragmentManager
                     }
-                    parentFm?.fragmentManager
                     // or use activity
                 }
             }
         fm?.beginTransaction()?.apply {
             if (isEnableAnim) {
-
                 setCustomAnimations(
                     R.anim.anim_slide_in_from_right, R.anim.anim_slide_out_to_left,
                     R.anim.anim_slide_enter_from_left, R.anim.anim_slide_out_to_right
@@ -66,7 +76,10 @@ abstract class BaseFragment : Fragment() {
     }
 
     internal fun addFragment(
-        fragment: Fragment, isEnableAnim: Boolean = true, tagNameBackStack: String? = null
+        fragment: Fragment,
+        isEnableAnim: Boolean = true,
+        tagNameBackStack: String? = null,
+        addInChild: Boolean = false
     ) {
         (fragment as? BaseFragment)?.setLevel(AppConstant.LEVEL_CONTAINER)
         val range = getLevel() - AppConstant.LEVEL_CONTAINER
@@ -81,11 +94,21 @@ abstract class BaseFragment : Fragment() {
                         fragmentManager
                 }
                 else -> {
-                    var parentFm: FragmentManager? = fragmentManager
-                    for (index in 0..range) {
-                        parentFm = parentFragment?.fragmentManager
+                    if (addInChild) {
+                        // get child fragment manager of container
+                        var parentFm: BaseFragment? = this
+                        while (parentFm?.isContainer() == false) {
+                            parentFm = parentFm.parentFragment as? BaseFragment
+                        }
+                        parentFm?.childFragmentManager
+                    } else {
+                        // get fragment manager of fragment when level = 1(Main top container)
+                        var parentFm: Fragment? = this
+                        for (index in 1..range) {
+                            parentFm = parentFragment
+                        }
+                        parentFm?.fragmentManager
                     }
-                    parentFm
                 }
             }
         fm?.beginTransaction()?.apply {

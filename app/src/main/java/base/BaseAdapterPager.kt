@@ -19,10 +19,8 @@ abstract class BaseAdapterPager(fm: FragmentManager, private val level: Int) :
         val fragment = super.instantiateItem(container, position) as BaseFragment
         fragment.apply {
             // set container
-            if (level == AppConstant.LEVEL_TOP) {
-                arguments = Bundle().apply {
-                    putBoolean(AppConstant.KEY_IS_CONTAINER, true)
-                }
+            arguments = Bundle().apply {
+                putBoolean(AppConstant.KEY_IS_CONTAINER, true)
             }
             setLevel(level + 1)
         }

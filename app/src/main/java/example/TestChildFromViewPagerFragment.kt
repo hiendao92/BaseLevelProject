@@ -51,6 +51,9 @@ class TestChildFromViewPagerFragment : BaseFragment() {
         btnAddSuperFragment.setOnClickListener {
             addSuperFragment(TestFragment.newInstance("Add Super Fragment"))
         }
+        btnAddFragmentInChild.setOnClickListener {
+            addFragment(TestFragment.newInstance("Fragment in child "), addInChild = true)
+        }
     }
 
 }
