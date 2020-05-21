@@ -86,6 +86,8 @@ abstract class BaseFragment : Fragment() {
                         while (parentFm?.isContainer() == false) {
                             parentFm = parentFm.parentFragment as? BaseFragment
                         }
+                        // set level child = parent
+                        (fragment as? BaseFragment)?.setLevel(getLevel())
                         parentFm?.childFragmentManager
                     } else {
                         // get fragment manager of fragment when level = 1(Main top container)
@@ -93,8 +95,6 @@ abstract class BaseFragment : Fragment() {
                         for (index in 1..range) {
                             parentFm = parentFragment
                         }
-                        // set level child = parent
-                        (fragment as? BaseFragment)?.setLevel(getLevel())
                         parentFm?.fragmentManager
                     }
                     // or use activity
