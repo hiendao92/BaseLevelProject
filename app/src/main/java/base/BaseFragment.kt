@@ -1,7 +1,6 @@
 package base
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -37,7 +36,6 @@ abstract class BaseFragment : Fragment() {
     }
 
     protected open fun handleBackPressed() {
-        Log.e("xxxxxxxx", getLevel().toString())
         when (getLevel()) {
             AppConstant.LEVEL_TOP -> return
             AppConstant.LEVEL_CONTAINER -> {
