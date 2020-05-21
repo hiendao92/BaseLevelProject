@@ -28,25 +28,31 @@ abstract class BaseFragment : Fragment() {
             /** true means that the callback is enabled */
         ) {
             override fun handleOnBackPressed() {
-                handleOnBackPressed()
+                handleBackPressed()
             }
         }
 
         // note that you could enable/disable the callback here as well by setting callback.isEnabled = true/false
-
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
-    protected open fun handleBackPress() {
+    protected open fun handleBackPressed() {
+        Log.e("xxxxxxxx", getLevel().toString())
         when (getLevel()) {
-            AppConstant.LEVEL_TOP -> {
-
-            }
+            AppConstant.LEVEL_TOP -> return
             AppConstant.LEVEL_CONTAINER -> {
-
+                if (isContainer()) {
+                    return
+                } else {
+                    fragmentManager?.popBackStack()
+                }
             }
             else -> {
-
+                if (isContainer()) {
+                    (parentFragment as? BaseFragment)?.handleBackPressed()
+                } else {
+                    fragmentManager?.popBackStack()
+                }
             }
         }
     }
@@ -89,6 +95,8 @@ abstract class BaseFragment : Fragment() {
                         for (index in 1..range) {
                             parentFm = parentFragment
                         }
+                        // set level child = parent
+                        (fragment as? BaseFragment)?.setLevel(getLevel())
                         parentFm?.fragmentManager
                     }
                     // or use activity
@@ -134,6 +142,8 @@ abstract class BaseFragment : Fragment() {
                         while (parentFm?.isContainer() == false) {
                             parentFm = parentFm.parentFragment as? BaseFragment
                         }
+                        // set level child = parent
+                        (fragment as? BaseFragment)?.setLevel(getLevel())
                         parentFm?.childFragmentManager
                     } else {
                         // get fragment manager of fragment when level = 1(Main top container)

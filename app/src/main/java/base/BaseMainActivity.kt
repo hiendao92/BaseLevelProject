@@ -37,18 +37,18 @@ abstract class BaseMainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        superContainer.childFragmentManager.also {
-            if (it.fragments.size > 0) {
-                // pop super flow
-                it.popBackStack()
-            } else {
-                // pop example.main flow
-                mainContainer.popBackStack()
-            }
-        }
-    }
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        superContainer.childFragmentManager.also {
+//            if (it.fragments.size > 0) {
+//                // pop super flow
+//                it.popBackStack()
+//            } else {
+//                // pop example.main flow
+//                mainContainer.popBackStack()
+//            }
+//        }
+//    }
 
     internal fun addSuperFragment(
         fragment: Fragment,
