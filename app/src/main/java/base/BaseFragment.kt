@@ -108,9 +108,15 @@ abstract class BaseFragment : Fragment() {
                         for (index in 1..range) {
                             parentFm = parentFragment
                         }
-                        parentFm?.fragmentManager
+                        // user fragment with level = 1 to replace fragment
+                        (parentFm as? BaseFragment)?.replaceFragment(
+                            fragment,
+                            isAddBackStack,
+                            isEnableAnim,
+                            tagNameBackStack
+                        )
+                        return
                     }
-                    // or use activity
                 }
             }
         fm?.beginTransaction()?.apply {
@@ -162,7 +168,13 @@ abstract class BaseFragment : Fragment() {
                         for (index in 1..range) {
                             parentFm = parentFragment
                         }
-                        parentFm?.fragmentManager
+                        // user fragment with level = 1 to add fragment
+                        (parentFm as? BaseFragment)?.addFragment(
+                            fragment,
+                            isEnableAnim,
+                            tagNameBackStack
+                        )
+                        return
                     }
                 }
             }

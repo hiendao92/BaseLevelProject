@@ -39,7 +39,6 @@ class TestFragment : BaseFragment() {
     }
 
     override fun onBindViewModel() {
-            var test = ""
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,10 +53,6 @@ class TestFragment : BaseFragment() {
     private fun initViews() {
         tvCenter.text = arguments?.getString(KEY_TEXT)
         tvPage.text = "Page :$page ----- Level :${getLevel()}"
-    }
-
-    override fun onPause() {
-        super.onPause()
     }
 
     private fun initListeners() {
