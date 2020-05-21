@@ -14,6 +14,15 @@ abstract class BaseFragment : Fragment() {
 
     internal fun getLevel() = level
 
+    private var callBackWhenBackPress: OnBackPressedCallback = object : OnBackPressedCallback(
+        true
+        /** true means that the callback is enabled */
+    ) {
+        override fun handleOnBackPressed() {
+            handleBackPressed()
+        }
+    }
+
     private fun isContainer() = arguments?.getBoolean(AppConstant.KEY_IS_CONTAINER) ?: false
 
     internal fun setLevel(level: Int) {
@@ -22,17 +31,20 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val callback = object : OnBackPressedCallback(
-            true
-            /** true means that the callback is enabled */
-        ) {
-            override fun handleOnBackPressed() {
-                handleBackPressed()
-            }
-        }
-
         // note that you could enable/disable the callback here as well by setting callback.isEnabled = true/false
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            callBackWhenBackPress
+        )
+    }
+
+    private fun handleAddCallBack(isEnable: Boolean = true) {
+        callBackWhenBackPress.isEnabled = isEnable
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handleAddCallBack(false)
     }
 
     protected open fun handleBackPressed() {
@@ -57,6 +69,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        handleAddCallBack(true)
         onBindViewModel()
     }
 
