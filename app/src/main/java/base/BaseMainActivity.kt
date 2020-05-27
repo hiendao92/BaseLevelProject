@@ -27,10 +27,6 @@ abstract class BaseMainActivity : AppCompatActivity() {
     private fun initBase() {
         mainContainer = mainContainer()
         superContainer = superContainer().apply {
-            // set container
-            arguments = Bundle().apply {
-                putBoolean(AppConstant.KEY_IS_CONTAINER, true)
-            }
             setLevel(AppConstant.LEVEL_CONTAINER)
         }
     }

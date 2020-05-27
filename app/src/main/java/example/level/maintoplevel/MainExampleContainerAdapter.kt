@@ -3,20 +3,12 @@ package example.level.maintoplevel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import base.BaseAdapterPager
-import example.Tab1Fragment
-import example.Tab2Fragment
-import example.Tab3Fragment
-import example.Tab4Fragment
+import example.containertab.ContainerTabExampleFragment
 
 class MainExampleContainerAdapter(fm: FragmentManager, level: Int) :
     BaseAdapterPager(fm, level) {
     override fun getItem(position: Int): Fragment {
-        return when (position) {
-            EPageContainer.PAGE1.value -> Tab1Fragment()
-            EPageContainer.PAGE2.value -> Tab2Fragment()
-            EPageContainer.PAGE3.value -> Tab3Fragment()
-            else -> Tab4Fragment()
-        }
+        return ContainerTabExampleFragment.newInstance(position)
     }
 
     override fun getCount(): Int = 4

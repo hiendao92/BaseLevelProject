@@ -9,6 +9,6 @@ abstract class BaseSuperContainer : BaseFragment() {
         fragment: Fragment,
         isEnableAnim: Boolean = true, tagNameBackStack: String? = null
     ) {
-        addFragment(fragment, isEnableAnim, tagNameBackStack)
+        addInContainer(fragment, isEnableAnim, tagNameBackStack)
     }
 }

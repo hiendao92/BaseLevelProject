@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.example.myapplication.R
 import data.AppConstant
 
@@ -22,8 +21,6 @@ abstract class BaseFragment : Fragment() {
             handleBackPressed()
         }
     }
-
-    private fun isContainer() = arguments?.getBoolean(AppConstant.KEY_IS_CONTAINER) ?: false
 
     internal fun setLevel(level: Int) {
         this.level = level
@@ -49,19 +46,27 @@ abstract class BaseFragment : Fragment() {
 
     protected open fun handleBackPressed() {
         when (getLevel()) {
-            AppConstant.LEVEL_TOP -> return
-            AppConstant.LEVEL_CONTAINER -> {
-                if (isContainer()) {
-                    return
-                } else {
-                    fragmentManager?.popBackStack()
-                }
+            AppConstant.LEVEL_TOP, AppConstant.LEVEL_CONTAINER -> return
+            AppConstant.LEVEL_TAB -> {
+                fragmentManager?.popBackStack()
             }
             else -> {
-                if (isContainer()) {
-                    (parentFragment as? BaseFragment)?.handleBackPressed()
+                if (getLevel() % 2 == 0) {
+                    // child fragment in viewpager
+                    fragmentManager?.also {
+                        if (it.backStackEntryCount > 0) {
+                            // pop in child viewpager
+                            it.popBackStack()
+                        } else {
+                            // child in viewpager size == 0
+                            // pop in parent
+                            (parentFragment as? BaseFragment)?.handleBackPressed()
+                        }
+                    }
+
                 } else {
-                    fragmentManager?.popBackStack()
+                    // container
+                    (parentFragment as? BaseFragment)?.handleBackPressed()
                 }
             }
         }
@@ -77,117 +82,72 @@ abstract class BaseFragment : Fragment() {
 
     internal fun replaceFragment(
         fragment: Fragment, isAddBackStack: Boolean,
-        isEnableAnim: Boolean = true, tagNameBackStack: String? = null,
-        replaceInChild: Boolean = false
+        isEnableAnim: Boolean = true, tagNameBackStack: String? = null
     ) {
-        (fragment as? BaseFragment)?.setLevel(AppConstant.LEVEL_CONTAINER)
         val range = getLevel() - AppConstant.LEVEL_CONTAINER
-        val fm: FragmentManager? =
-            when (getLevel()) {
-                // do not use fragment manager of activity
-                AppConstant.LEVEL_TOP -> return
-                AppConstant.LEVEL_CONTAINER -> {
-                    if (isContainer())
-                        childFragmentManager
-                    else
-                        fragmentManager
-                }
-                else -> {
-                    if (replaceInChild) {
-                        // get child fragment manager of container
-                        var parentFm: BaseFragment? = this
-                        while (parentFm?.isContainer() == false) {
-                            parentFm = parentFm.parentFragment as? BaseFragment
-                        }
-                        // set level child = parent
-                        (fragment as? BaseFragment)?.setLevel(getLevel())
-                        parentFm?.childFragmentManager
-                    } else {
-                        // get fragment manager of fragment when level = 1(Main top container)
-                        var parentFm: Fragment? = this
-                        for (index in 1..range) {
-                            parentFm = parentFragment
-                        }
-                        // user fragment with level = 1 to replace fragment
-                        (parentFm as? BaseFragment)?.replaceFragment(
-                            fragment,
-                            isAddBackStack,
-                            isEnableAnim,
-                            tagNameBackStack
-                        )
-                        return
-                    }
-                }
-            }
-        fm?.beginTransaction()?.apply {
-            if (isEnableAnim) {
-                setCustomAnimations(
-                    R.anim.anim_slide_in_from_right, R.anim.anim_slide_out_to_left,
-                    R.anim.anim_slide_enter_from_left, R.anim.anim_slide_out_to_right
+        when (getLevel()) {
+            // do not use fragment manager of activity
+            AppConstant.LEVEL_TOP -> return
+            AppConstant.LEVEL_CONTAINER -> {
+                // add in main tab folow
+                replaceInContainer(
+                    fragment,
+                    isAddBackStack,
+                    isEnableAnim,
+                    tagNameBackStack
                 )
             }
-            replace(R.id.flContainer, fragment, fragment.javaClass.simpleName)
-            if (isAddBackStack) {
-                addToBackStack(tagNameBackStack)
+            else -> {
+                // get fragment manager of fragment when level = 1(Main top container)
+                var parentFm: Fragment? = this
+                for (index in 1..range) {
+                    parentFm = parentFm?.parentFragment
+                }
+                // user fragment with level = 1 to add fragment
+                (parentFm as? BaseFragment)?.replaceInContainer(
+                    fragment,
+                    isAddBackStack,
+                    isEnableAnim,
+                    tagNameBackStack
+                )
             }
-            commit()
         }
     }
+
+    /**
+     * add fragment in main tab follow
+     */
 
     internal fun addFragment(
         fragment: Fragment,
         isEnableAnim: Boolean = true,
-        tagNameBackStack: String? = null,
-        addInChild: Boolean = false
+        tagNameBackStack: String? = null
     ) {
-        (fragment as? BaseFragment)?.setLevel(AppConstant.LEVEL_CONTAINER)
         val range = getLevel() - AppConstant.LEVEL_CONTAINER
-        val fm: FragmentManager? =
-            when (getLevel()) {
-                // do not use fragment manager of activity
-                AppConstant.LEVEL_TOP -> return
-                AppConstant.LEVEL_CONTAINER -> {
-                    if (isContainer())
-                        childFragmentManager
-                    else
-                        fragmentManager
-                }
-                else -> {
-                    if (addInChild) {
-                        // get child fragment manager of container
-                        var parentFm: BaseFragment? = this
-                        while (parentFm?.isContainer() == false) {
-                            parentFm = parentFm.parentFragment as? BaseFragment
-                        }
-                        // set level child = parent
-                        (fragment as? BaseFragment)?.setLevel(getLevel())
-                        parentFm?.childFragmentManager
-                    } else {
-                        // get fragment manager of fragment when level = 1(Main top container)
-                        var parentFm: Fragment? = this
-                        for (index in 1..range) {
-                            parentFm = parentFragment
-                        }
-                        // user fragment with level = 1 to add fragment
-                        (parentFm as? BaseFragment)?.addFragment(
-                            fragment,
-                            isEnableAnim,
-                            tagNameBackStack
-                        )
-                        return
-                    }
-                }
-            }
-        fm?.beginTransaction()?.apply {
-            if (isEnableAnim) {
-                setCustomAnimations(
-                    R.anim.anim_slide_in_from_right, R.anim.anim_slide_out_to_left,
-                    R.anim.anim_slide_enter_from_left, R.anim.anim_slide_out_to_right
+        when (getLevel()) {
+            // do not use fragment manager of activity
+            AppConstant.LEVEL_TOP -> return
+            AppConstant.LEVEL_CONTAINER -> {
+                // add in main tab folow
+                addInContainer(
+                    fragment,
+                    isEnableAnim,
+                    tagNameBackStack
                 )
             }
-            add(R.id.flContainer, fragment, fragment.javaClass.simpleName)
-            addToBackStack(tagNameBackStack)
-            commit()
+            else -> {
+                // get fragment manager of fragment when level = 1(Main top container)
+                var parentFm: Fragment? = this
+                for (index in 1..range) {
+                    parentFm = parentFm?.parentFragment
+                }
+                // user fragment with level = 1 to add fragment
+                (parentFm as? BaseFragment)?.addInContainer(
+                    fragment,
+                    isEnableAnim,
+                    tagNameBackStack
+                )
+            }
         }
     }
 
@@ -202,4 +162,104 @@ abstract class BaseFragment : Fragment() {
         )
     }
 
+    /**
+     * add fragment in viewpager
+     */
+    internal fun addInChildFragment(
+        fragment: Fragment,
+        isEnableAnim: Boolean = true,
+        tagNameBackStack: String? = null
+    ) {
+        when {
+            // do not use fragment manager of activity
+            level == AppConstant.LEVEL_TOP -> return
+            level == AppConstant.LEVEL_CONTAINER || level % 2 != 0 -> {
+                // in this base: container level is a odd number
+                addInContainer(
+                    fragment,
+                    isEnableAnim,
+                    tagNameBackStack
+                )
+            }
+            level == AppConstant.LEVEL_TAB || level % 2 == 0 -> {
+                // child in viewpager
+                (parentFragment as? BaseFragment)?.addInContainer(
+                    fragment,
+                    isEnableAnim,
+                    tagNameBackStack
+                )
+            }
+            else -> return
+        }
+    }
+
+    /**
+     * replace fragment in viewpager
+     */
+    internal fun replaceInChildFragment(
+        fragment: Fragment, isAddBackStack: Boolean,
+        isEnableAnim: Boolean = true, tagNameBackStack: String? = null
+    ) {
+        when {
+            // do not use fragment manager of activity
+            level == AppConstant.LEVEL_TOP -> return
+            level == AppConstant.LEVEL_CONTAINER || level % 2 != 0 -> {
+                // in this base: container level is a odd number
+                replaceInContainer(
+                    fragment,
+                    isAddBackStack,
+                    isEnableAnim,
+                    tagNameBackStack
+                )
+            }
+            level == AppConstant.LEVEL_TAB || level % 2 == 0 -> {
+                // child in viewpager
+                (parentFragment as? BaseFragment)?.replaceInContainer(
+                    fragment,
+                    isAddBackStack,
+                    isEnableAnim,
+                    tagNameBackStack
+                )
+            }
+            else -> return
+        }
+    }
+
+    internal fun replaceInContainer(
+        fragment: Fragment, isAddBackStack: Boolean,
+        isEnableAnim: Boolean = true, tagNameBackStack: String? = null
+    ) {
+        (fragment as? BaseFragment)?.setLevel(getLevel() + 1)
+        childFragmentManager.beginTransaction().apply {
+            if (isEnableAnim) {
+                setCustomAnimations(
+                    R.anim.anim_slide_in_from_right, R.anim.anim_slide_out_to_left,
+                    R.anim.anim_slide_enter_from_left, R.anim.anim_slide_out_to_right
+                )
+            }
+            replace(R.id.flContainer, fragment, fragment.javaClass.simpleName)
+            if (isAddBackStack) {
+                addToBackStack(tagNameBackStack)
+            }
+            commit()
+        }
+    }
+
+    internal fun addInContainer(
+        fragment: Fragment,
+        isEnableAnim: Boolean = true, tagNameBackStack: String? = null
+    ) {
+        (fragment as? BaseFragment)?.setLevel(getLevel() + 1)
+        childFragmentManager.beginTransaction().apply {
+            if (isEnableAnim) {
+                setCustomAnimations(
+                    R.anim.anim_slide_in_from_right, R.anim.anim_slide_out_to_left,
+                    R.anim.anim_slide_enter_from_left, R.anim.anim_slide_out_to_right
+                )
+            }
+            add(R.id.flContainer, fragment, fragment.javaClass.simpleName)
+            addToBackStack(tagNameBackStack)
+            commit()
+        }
+    }
 }

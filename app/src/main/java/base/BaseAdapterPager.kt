@@ -18,10 +18,6 @@ abstract class BaseAdapterPager(fm: FragmentManager, private val level: Int) :
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val fragment = super.instantiateItem(container, position) as BaseFragment
         fragment.apply {
-            // set container
-            arguments = Bundle().apply {
-                putBoolean(AppConstant.KEY_IS_CONTAINER, true)
-            }
             setLevel(level + 1)
         }
         registeredFragments.put(position, fragment)

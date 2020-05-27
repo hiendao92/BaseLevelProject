@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import base.level.maintoplevel.BaseMainContainer
 import com.example.myapplication.R
-import kotlinx.android.synthetic.main.fragment_container.*
+import kotlinx.android.synthetic.main.fragment_main_container.*
 
 class MainExampleContainerFragment : BaseMainContainer() {
 
@@ -19,7 +19,7 @@ class MainExampleContainerFragment : BaseMainContainer() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_container, container, false)
+        return inflater.inflate(R.layout.fragment_main_container, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -6,6 +6,7 @@ object AppConstant {
      */
     const val LEVEL_TOP = 0
     const val LEVEL_CONTAINER = 1
+    const val LEVEL_TAB = 2
 
     /**
      * Container
