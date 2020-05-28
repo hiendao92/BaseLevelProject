@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import base.level.maintoplevel.BaseMainContainer
+import base.BaseFragment
 import com.example.myapplication.R
 import kotlinx.android.synthetic.main.fragment_main_container.*
 
-class MainExampleContainerFragment : BaseMainContainer() {
+class MainExampleContainerFragment : BaseFragment() {
 
     private val adapter: MainExampleContainerAdapter by lazy {
         MainExampleContainerAdapter(childFragmentManager, getLevel())
@@ -46,12 +46,6 @@ class MainExampleContainerFragment : BaseMainContainer() {
 
     private fun initListeners() {
 
-    }
-
-    override fun popBackStack() {
-        vpContainer?.currentItem?.also {
-            adapter.getRegisteredFragment(it)?.childFragmentManager?.popBackStack()
-        }
     }
 
 }

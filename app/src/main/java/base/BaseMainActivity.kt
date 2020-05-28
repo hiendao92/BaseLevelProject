@@ -3,18 +3,16 @@ package base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import base.level.maintoplevel.BaseMainContainer
-import base.level.superlevel.BaseSuperContainer
 import com.example.myapplication.R
 import data.AppConstant
 
 abstract class BaseMainActivity : AppCompatActivity() {
-    private lateinit var mainContainer: BaseMainContainer
-    private lateinit var superContainer: BaseSuperContainer
+    private lateinit var mainContainer: BaseFragment
+    private lateinit var superContainer: BaseFragment
 
-    abstract fun mainContainer(): BaseMainContainer
+    abstract fun mainContainer(): BaseFragment
 
-    abstract fun superContainer(): BaseSuperContainer
+    abstract fun superContainer(): BaseFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +33,7 @@ abstract class BaseMainActivity : AppCompatActivity() {
         fragment: Fragment,
         isEnableAnim: Boolean = true, tagNameBackStack: String? = null
     ) {
-        superContainer.addFragmentFromSuper(fragment, isEnableAnim, tagNameBackStack)
+        superContainer.addInContainer(fragment, isEnableAnim, tagNameBackStack)
     }
 
     /**

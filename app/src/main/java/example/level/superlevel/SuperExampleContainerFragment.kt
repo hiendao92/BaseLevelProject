@@ -5,12 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import base.BaseFragment
-import base.level.superlevel.BaseSuperContainer
 import com.example.myapplication.R
 
-class SuperExampleContainerFragment : BaseSuperContainer() {
+class SuperExampleContainerFragment : BaseFragment() {
     override fun onBindViewModel() {
-
     }
 
     override fun onCreateView(
