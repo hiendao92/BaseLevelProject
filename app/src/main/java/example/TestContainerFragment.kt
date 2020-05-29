@@ -36,9 +36,9 @@ class TestContainerFragment : BaseFragment() {
     private fun handleAddChildFragment() {
         if (currentFragment == null) {
             currentFragment = TestChildFromViewPagerFragment()
-        }
-        currentFragment?.also {
-            replaceInContainer(it, false, false)
+            currentFragment?.also {
+                replaceInContainer(it, false, false)
+            }
         }
     }
 

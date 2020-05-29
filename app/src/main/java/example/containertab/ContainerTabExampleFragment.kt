@@ -59,9 +59,9 @@ class ContainerTabExampleFragment : BaseFragment() {
                     }
                 }
             }
-        }
-        currentFragment?.also {
-            replaceInContainer(it, false, false)
+            currentFragment?.also {
+                replaceInContainer(it, false, false)
+            }
         }
     }
 

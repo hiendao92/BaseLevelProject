@@ -33,7 +33,7 @@ abstract class FragmentController : Fragment() {
         )
     }
 
-    private fun handleAddCallBack(isEnable: Boolean = true) {
+    internal fun handleAddCallBack(isEnable: Boolean = true) {
         callBackWhenBackPress.isEnabled = isEnable
     }
 
