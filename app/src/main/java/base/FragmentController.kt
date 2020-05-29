@@ -1,7 +1,6 @@
 package base
 
 import android.os.Bundle
-import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.myapplication.R
@@ -16,7 +15,7 @@ abstract class FragmentController : Fragment() {
     }
 
     private var callBackWhenBackPress: OnBackPressedCallback = object : OnBackPressedCallback(
-        true
+        false
         /** true means that the callback is enabled */
     ) {
         override fun handleOnBackPressed() {
@@ -24,16 +23,16 @@ abstract class FragmentController : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         // note that you could enable/disable the callback here as well by setting callback.isEnabled = true/false
         requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
+            this,
             callBackWhenBackPress
         )
     }
 
-    internal fun handleAddCallBack(isEnable: Boolean = true) {
+    private fun handleAddCallBack(isEnable: Boolean = true) {
         callBackWhenBackPress.isEnabled = isEnable
     }
 
@@ -51,20 +50,20 @@ abstract class FragmentController : Fragment() {
             else -> {
                 if (level % 2 == 0) {
                     // child fragment in viewpager
-                    fragmentManager?.also {
+                    parentFragment?.childFragmentManager?.also {
                         if (it.backStackEntryCount > 0) {
                             // pop in child viewpager
-                            it.popBackStack()
+                            fragmentManager?.popBackStack()
                         } else {
                             // child in viewpager size == 0
                             // pop in parent
-                            (parentFragment as? BaseFragment)?.handleBackPressed()
+                            (parentFragment as? FragmentController)?.handleBackPressed()
                         }
                     }
 
                 } else {
                     // container
-                    (parentFragment as? BaseFragment)?.handleBackPressed()
+                    (parentFragment as? FragmentController)?.handleBackPressed()
                 }
             }
         }
@@ -102,7 +101,7 @@ abstract class FragmentController : Fragment() {
                     parentFm = parentFm?.parentFragment
                 }
                 // user fragment with level = 1 to add fragment
-                (parentFm as? BaseFragment)?.replaceInContainer(
+                (parentFm as? FragmentController)?.replaceInContainer(
                     fragment,
                     isAddBackStack,
                     isEnableAnim,
@@ -140,7 +139,7 @@ abstract class FragmentController : Fragment() {
                     parentFm = parentFm?.parentFragment
                 }
                 // user fragment with level = 1 to add fragment
-                (parentFm as? BaseFragment)?.addInContainer(
+                (parentFm as? FragmentController)?.addInContainer(
                     fragment,
                     isEnableAnim,
                     tagNameBackStack
@@ -170,7 +169,7 @@ abstract class FragmentController : Fragment() {
             }
             level == AppConstant.LEVEL_TAB || level % 2 == 0 -> {
                 // child in viewpager
-                (parentFragment as? BaseFragment)?.addInContainer(
+                (parentFragment as? FragmentController)?.addInContainer(
                     fragment,
                     isEnableAnim,
                     tagNameBackStack

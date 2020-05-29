@@ -5,11 +5,13 @@ import androidx.fragment.app.FragmentManager
 import base.BaseAdapterPager
 import example.containertab.ContainerTabExampleFragment
 
-class MainExampleContainerAdapter(fm: FragmentManager, level: Int) :
+class MainExampleContainerAdapter(
+    fm: FragmentManager,
+    level: Int,
+    private val fragments: MutableList<Fragment>
+) :
     BaseAdapterPager(fm, level) {
-    override fun getItem(position: Int): Fragment {
-        return ContainerTabExampleFragment.newInstance(position)
-    }
+    override fun getItem(position: Int): Fragment = fragments[position]
 
     override fun getCount(): Int = 4
 
