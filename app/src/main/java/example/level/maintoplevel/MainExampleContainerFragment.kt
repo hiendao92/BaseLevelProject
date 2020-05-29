@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.fragment_main_container.*
 class MainExampleContainerFragment : BaseFragment() {
 
     private val adapter: MainExampleContainerAdapter by lazy {
-        MainExampleContainerAdapter(childFragmentManager, getLevel())
+        MainExampleContainerAdapter(childFragmentManager, level)
     }
 
     override fun onCreateView(

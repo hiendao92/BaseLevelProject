@@ -1,14 +1,12 @@
 package base
 
-import android.os.Bundle
 import android.util.SparseArray
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import data.AppConstant
 
-abstract class BaseAdapterPager(fm: FragmentManager, private val level: Int) :
+abstract class BaseAdapterPager(fm: FragmentManager, private val levelParent: Int) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     // Sparse array to keep track of registered fragments in memory
@@ -18,7 +16,7 @@ abstract class BaseAdapterPager(fm: FragmentManager, private val level: Int) :
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val fragment = super.instantiateItem(container, position) as BaseFragment
         fragment.apply {
-            setLevel(level + 1)
+            setLevel(levelParent + 1)
         }
         registeredFragments.put(position, fragment)
         return fragment

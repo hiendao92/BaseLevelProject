@@ -52,7 +52,7 @@ class TestFragment : BaseFragment() {
 
     private fun initViews() {
         tvCenter.text = arguments?.getString(KEY_TEXT)
-        tvPage.text = "Page :$page ----- Level :${getLevel()}"
+        tvPage.text = "Page :$page ----- Level :${level}"
     }
 
     private fun initListeners() {

@@ -23,7 +23,7 @@ class TestChildFromViewPagerFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tvLevel.text = "Level : ${getLevel()}"
+        tvLevel.text = "Level : ${level}"
         initListeners()
     }
 

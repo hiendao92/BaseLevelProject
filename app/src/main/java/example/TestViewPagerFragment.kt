@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.fragment_test_vp.*
 
 class TestViewPagerFragment : BaseFragment() {
     private val adapter by lazy {
-        TestAdapterPager(childFragmentManager, getLevel())
+        TestAdapterPager(childFragmentManager, level)
     }
 
     override fun onBindViewModel() {
