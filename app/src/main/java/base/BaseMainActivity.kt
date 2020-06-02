@@ -38,9 +38,4 @@ abstract class BaseMainActivity : AppCompatActivity() {
         superContainer.addInContainer(fragment, isEnableAnim, tagNameBackStack)
     }
 
-    override fun onBackPressed() {
-        if (onBackPressedDispatcher.hasEnabledCallbacks())
-            super.onBackPressed()
-    }
-
 }

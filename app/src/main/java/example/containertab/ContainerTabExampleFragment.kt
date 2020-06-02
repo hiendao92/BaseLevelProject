@@ -60,12 +60,10 @@ class ContainerTabExampleFragment : BaseFragment() {
                 }
             }
             currentFragment?.also {
-                replaceInContainer(it, false, false)
+                replaceInContainer(it, isAddBackStack = false, isEnableAnim = false)
             }
         }
     }
 
-    override fun onBindViewModel() {
-
-    }
+    override fun onBindViewModel() = Unit
 }

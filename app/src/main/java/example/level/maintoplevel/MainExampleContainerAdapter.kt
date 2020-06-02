@@ -3,7 +3,6 @@ package example.level.maintoplevel
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import base.BaseAdapterPager
-import example.containertab.ContainerTabExampleFragment
 
 class MainExampleContainerAdapter(
     fm: FragmentManager,
