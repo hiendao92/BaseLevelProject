@@ -7,6 +7,11 @@ import com.example.myapplication.R
 import data.AppConstant
 
 abstract class FragmentController : Fragment() {
+
+    companion object {
+        private const val LEVEL_RATIO = 2
+    }
+
     internal var level: Int = 0
         private set
 
@@ -45,15 +50,15 @@ abstract class FragmentController : Fragment() {
         when (level) {
             AppConstant.LEVEL_TOP, AppConstant.LEVEL_CONTAINER -> return
             AppConstant.LEVEL_TAB -> {
-                fragmentManager?.popBackStack()
+                parentFragmentManager.popBackStack()
             }
             else -> {
-                if (level % 2 == 0) {
+                if (level % LEVEL_RATIO == 0) {
                     // child fragment in viewpager
                     parentFragment?.childFragmentManager?.also {
                         if (it.backStackEntryCount > 0) {
                             // pop in child viewpager
-                            fragmentManager?.popBackStack()
+                            parentFragmentManager.popBackStack()
                         } else {
                             // child in viewpager size == 0
                             // pop in parent
@@ -159,7 +164,7 @@ abstract class FragmentController : Fragment() {
         when {
             // do not use fragment manager of activity
             level == AppConstant.LEVEL_TOP -> return
-            level == AppConstant.LEVEL_CONTAINER || level % 2 != 0 -> {
+            level == AppConstant.LEVEL_CONTAINER || level % LEVEL_RATIO != 0 -> {
                 // in this base: container level is a odd number
                 addInContainer(
                     fragment,
@@ -167,7 +172,7 @@ abstract class FragmentController : Fragment() {
                     tagNameBackStack
                 )
             }
-            level == AppConstant.LEVEL_TAB || level % 2 == 0 -> {
+            level == AppConstant.LEVEL_TAB || level % LEVEL_RATIO == 0 -> {
                 // child in viewpager
                 (parentFragment as? FragmentController)?.addInContainer(
                     fragment,
@@ -189,7 +194,7 @@ abstract class FragmentController : Fragment() {
         when {
             // do not use fragment manager of activity
             level == AppConstant.LEVEL_TOP -> return
-            level == AppConstant.LEVEL_CONTAINER || level % 2 != 0 -> {
+            level == AppConstant.LEVEL_CONTAINER || level % LEVEL_RATIO != 0 -> {
                 // in this base: container level is a odd number
                 replaceInContainer(
                     fragment,
@@ -198,7 +203,7 @@ abstract class FragmentController : Fragment() {
                     tagNameBackStack
                 )
             }
-            level == AppConstant.LEVEL_TAB || level % 2 == 0 -> {
+            level == AppConstant.LEVEL_TAB || level % LEVEL_RATIO == 0 -> {
                 // child in viewpager
                 (parentFragment as? BaseFragment)?.replaceInContainer(
                     fragment,
