@@ -5,5 +5,6 @@
     <string name="navigation_tab_2">Tab2</string>
     <string name="navigation_tab_3">Tab3</string>
     <string name="navigation_tab_4">Tab4</string>
+    <string name="cities">Cities</string>
 
 </resources>

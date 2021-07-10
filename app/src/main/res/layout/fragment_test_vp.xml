@@ -30,7 +30,7 @@
 
     </LinearLayout>
 
-    <widget.NoSwipeViewPager
+    <com.android.myapplication.widget.NoSwipeViewPager
         android:id="@+id/vpContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
