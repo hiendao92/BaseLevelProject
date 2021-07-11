@@ -2,14 +2,18 @@
 
 buildscript {
     ext.kotlin_version = '1.4.30'
+    ext.hilt_version = '2.35'
     repositories {
         google()
         jcenter()
         
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.1'
+        classpath 'com.android.tools.build:gradle:4.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual come.android.myapplication.module build.gradle files
     }
@@ -19,7 +23,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        mavenCentral()
     }
 }
 

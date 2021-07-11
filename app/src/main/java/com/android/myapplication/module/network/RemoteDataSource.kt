@@ -1,4 +1,4 @@
-package com.android.myapplication.network
+package com.android.myapplication.module.network
 
 import com.android.myapplication.data.model.City
 import com.android.myapplication.extensions.apiCall

@@ -1,7 +1,10 @@
 package com.android.myapplication.extensions
 
 import com.android.myapplication.data.model.ApiError
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 sealed class FlowResult<out T> {
     data class Success<T>(val value: T) : FlowResult<T>()
@@ -47,6 +50,19 @@ fun <T> Flow<FlowResult<T>>.onSuccess(action: suspend (T) -> Unit): Flow<FlowRes
         return@transform emit(result)
     }
 
+fun <T> Flow<FlowResult<T>>.doOnSuccess(
+    scope: CoroutineScope = CoroutineScope(Dispatchers.IO),
+    action: (T) -> Unit
+): Flow<FlowResult<T>> =
+    transform { result ->
+        if (result is FlowResult.Success<T>) {
+            scope.launch {
+                action(result.value)
+            }
+        }
+        return@transform emit(result)
+    }
+
 fun <T> Flow<FlowResult<T>>.mapSuccess(): Flow<T> =
     transform { result ->
         if (result is FlowResult.Success<T>) {
@@ -62,4 +78,19 @@ fun <T> Flow<FlowResult<T>>.onError(
             action(result.apiError)
         }
         return@transform emit(result)
+    }
+
+fun <T> Flow<FlowResult<T>>.transformToLocal(
+    block: suspend () -> T
+): Flow<FlowResult<T>> =
+    transform {
+        try {
+            val resultLocal = block()
+            return@transform emit(FlowResult.Success(resultLocal))
+        } catch (e: ApiError) {
+            return@transform emit(FlowResult.Error(e))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return@transform emit(FlowResult.Error(e.toError()))
+        }
     }

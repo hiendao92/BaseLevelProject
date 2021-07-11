@@ -1,25 +1,37 @@
 package com.android.myapplication.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.myapplication.databinding.FragmentMainBinding
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.myapplication.base.BaseFragment
+import com.android.myapplication.databinding.FragmentMainBinding
+import com.android.myapplication.extensions.onError
+import com.android.myapplication.extensions.onSuccess
+import com.android.myapplication.main.cites.CitiesAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.launchIn
 
 /**
  * @author at-hien.dao
  */
+@AndroidEntryPoint
 class MainFragment : BaseFragment() {
     private var binding: FragmentMainBinding? = null
+
+    private val viewModel: MainViewModel by viewModels()
+    private val adapter: CitiesAdapter by lazy {
+        CitiesAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.e("xxxxx", "MainFragment create view" )
         binding = FragmentMainBinding.inflate(inflater)
         return binding?.root
     }
@@ -31,7 +43,16 @@ class MainFragment : BaseFragment() {
     }
 
     private fun initViews() {
+        binding?.rvCities?.apply {
+            adapter = this@MainFragment.adapter
+            layoutManager =
+                LinearLayoutManager(requireContext())
+        }
+        viewModel.getCities().onSuccess {
+            adapter.submitList(it)
+        }.onError {
 
+        }.launchIn(lifecycleScope)
     }
 
     private fun initListeners() {

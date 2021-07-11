@@ -7,7 +7,6 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  * @author at-hien.dao
  */
-@AndroidEntryPoint
 class MainActivity : BaseMainActivity() {
 
     override fun mainContainer(): BaseFragment = MainContainerFragment()

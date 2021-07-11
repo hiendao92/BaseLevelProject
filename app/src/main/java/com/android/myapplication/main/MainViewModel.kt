@@ -5,7 +5,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import com.android.myapplication.data.model.City
 import com.android.myapplication.extensions.FlowResult
 import kotlinx.coroutines.flow.Flow
-import com.android.myapplication.network.Repository
+import com.android.myapplication.module.network.Repository
 import javax.inject.Inject
 
 /**

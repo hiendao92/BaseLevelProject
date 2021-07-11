@@ -7,7 +7,9 @@ import com.android.myapplication.R
 import com.android.myapplication.data.AppConstant
 import com.android.myapplication.extensions.addFragment
 import com.android.myapplication.extensions.replaceFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 abstract class BaseMainActivity : AppCompatActivity() {
     private lateinit var mainContainer: BaseFragment
     private lateinit var superContainer: BaseFragment

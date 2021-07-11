@@ -1,18 +1,17 @@
-package com.android.myapplication.network
+package com.android.myapplication.module.network
 
 import com.android.myapplication.BuildConfig
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Protocol
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -66,8 +65,9 @@ class RestModule {
             .client(client)
             .baseUrl(BuildConfig.API_URL)
             .addConverterFactory(
-                jsonParser.asConverterFactory("application/json".toMediaType())
-            ).build()
+                GsonConverterFactory.create()
+            )
+            .build()
     }
 
     @Provides
