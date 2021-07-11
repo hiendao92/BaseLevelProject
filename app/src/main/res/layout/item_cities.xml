@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:paddingStart="10dp"
     android:paddingEnd="10dp">
 
@@ -13,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
@@ -26,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/colorBlue"
         android:textSize="18sp"
@@ -39,7 +36,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:gravity="center"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textSize="16sp"
