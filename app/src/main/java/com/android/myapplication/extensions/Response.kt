@@ -1,9 +1,8 @@
 package com.android.myapplication.extensions
 
-import com.android.myapplication.data.JsonObj
 import com.android.myapplication.data.base.BaseResponse
 import com.android.myapplication.data.model.NetworkError
-import kotlinx.serialization.decodeFromString
+import com.google.gson.Gson
 import retrofit2.Response
 
 inline fun <T, R> Response<T>.mapSuccess(
@@ -33,20 +32,17 @@ fun <T> Response<T>.exceptionOnSuccessResponse(): NetworkError? {
 }
 
 fun <T> Response<T>.toError(): NetworkError {
-    try {
-        return exceptionOnSuccessResponse() ?: NetworkError(
+    return try {
+        exceptionOnSuccessResponse() ?: NetworkError(
             code = code().toString(),
-            message = JsonObj.JsonConvert.decodeFromString<BaseResponse>(
-                errorBody()?.string() ?: ""
-            ).message ?: "",
+            message = Gson().fromJson(errorBody()?.string() ?: "", BaseResponse::class.java).message
+                ?: "",
             apiUrl = this.raw().request.url.toString()
         )
     } catch (ex: Exception) {
-        return NetworkError(
+        NetworkError(
             code = code().toString(),
-            message = JsonObj.JsonConvert.decodeFromString<BaseResponse>(
-                errorBody()?.string() ?: ""
-            ).message
+            message = Gson().fromJson(errorBody()?.string() ?: "", BaseResponse::class.java).message
                 ?: "",
             apiUrl = this.raw().request.url.toString()
         )

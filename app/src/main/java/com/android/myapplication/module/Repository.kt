@@ -1,4 +1,4 @@
-package com.android.myapplication.module.network
+package com.android.myapplication.module
 
 import com.android.myapplication.data.model.City
 import com.android.myapplication.extensions.FlowResult
@@ -6,6 +6,7 @@ import com.android.myapplication.extensions.doOnSuccess
 import com.android.myapplication.extensions.safeFlow
 import com.android.myapplication.extensions.transformToLocal
 import com.android.myapplication.module.local.CityDao
+import com.android.myapplication.module.network.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
