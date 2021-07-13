@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.myapplication.base.BaseFragment
+import com.android.myapplication.data.model.DefaultError
+import com.android.myapplication.data.model.NetworkError
 import com.android.myapplication.databinding.FragmentMainBinding
 import com.android.myapplication.extensions.onSuccess
 import com.android.myapplication.main.cites.CitiesAdapter
@@ -44,6 +46,17 @@ class MainFragment : BaseFragment() {
             }
             viewModel.errorState().collect {
                 // bind error state
+                when (it) {
+                    is NetworkError -> {
+
+                    }
+                    is DefaultError -> {
+
+                    }
+                    else -> {
+
+                    }
+                }
             }
         }
         initViews()
