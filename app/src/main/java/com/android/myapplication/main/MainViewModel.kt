@@ -1,11 +1,12 @@
 package com.android.myapplication.main
 
-import com.android.myapplication.base.BaseViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
+import com.android.myapplication.base.viewmodel.BaseViewModel
 import com.android.myapplication.data.model.City
 import com.android.myapplication.extensions.FlowResult
-import kotlinx.coroutines.flow.Flow
+import com.android.myapplication.extensions.bindLoading
 import com.android.myapplication.module.Repository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 /**
@@ -21,6 +22,6 @@ class MainViewModel @Inject constructor(private val repository: Repository) : Ba
 
     override fun getCities(): Flow<FlowResult<MutableList<City>>> = repository.getDataCity(
         KEY_SEARCH
-    )
+    ).bindLoading(this)
 
 }

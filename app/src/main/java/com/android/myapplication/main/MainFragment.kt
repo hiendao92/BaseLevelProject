@@ -9,10 +9,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.myapplication.base.BaseFragment
 import com.android.myapplication.databinding.FragmentMainBinding
-import com.android.myapplication.extensions.onError
 import com.android.myapplication.extensions.onSuccess
 import com.android.myapplication.main.cites.CitiesAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.launchIn
 
 /**
@@ -38,6 +38,14 @@ class MainFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        lifecycleScope.launchWhenStarted {
+            viewModel.loadingState().collect {
+                // bind loading state
+            }
+            viewModel.errorState().collect {
+                // bind error state
+            }
+        }
         initViews()
         initListeners()
     }
@@ -50,8 +58,6 @@ class MainFragment : BaseFragment() {
         }
         viewModel.getCities().onSuccess {
             adapter.submitList(it)
-        }.onError {
-
         }.launchIn(lifecycleScope)
     }
 
